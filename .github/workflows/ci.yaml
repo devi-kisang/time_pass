@@ -30,3 +30,13 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ghcr.io/devi-kisang/time_pass:latest
+
+    - name: Deploy to Azure VM
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd ~
+          ./deploy.sh
