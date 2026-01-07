@@ -23,13 +23,19 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build Docker image
+    - name: Build Docker backend image
       run: |
-        docker build -t ghcr.io/devi-kisang/time_pass:latest .
+        docker build -t ghcr.io/devi-kisang/time_pass-backend:latest ./backend
 
-    - name: Push Docker image
+    - name: Push Docker backend image
       run: |
-        docker push ghcr.io/devi-kisang/time_pass:latest
+        docker push ghcr.io/devi-kisang/time_pass-backend:latest
+    
+    - name: Build & push frontend image
+      run: |
+        docker build -t ghcr.io/devi-kisang/time_pass-frontend:latest ./frontend
+        docker push ghcr.io/devi-kisang/time_pass-frontend:latest
+
 
     - name: Deploy to Azure VM
       uses: appleboy/ssh-action@v1.0.0
