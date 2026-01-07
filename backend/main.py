@@ -1,10 +1,12 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 app=FastAPI()
 
-@app.get('/')
+@app.get('/api')
 def greeting():
-    return("welcome to HOMEPAGE")
+    return{"message":"Welcome to Homepage"}
+
 
 @app.get('/movies')
 def msg():
