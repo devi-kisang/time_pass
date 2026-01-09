@@ -5,8 +5,10 @@ router = APIRouter(prefix="/movies", tags=["movies"])
 
 @router.get("/")
 def list_movies():
-    return {
-        "status": "ok",
-        "message": "Movie streaming coming soon",
-        "movies": get_movies()
-    }
+    movies = get_movies()
+
+    # add streaming URL for frontend
+    for movie in movies:
+        movie["stream_url"] = f"/videos/{movie['filename']}"
+
+    return movies

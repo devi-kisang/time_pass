@@ -1,10 +1,23 @@
 def get_movies():
-    # later this can scan a folder, DB, or cloud storage
     return [
         {
-            "id": 1,
-            "title": "Demo Movie",
-            "duration": "2h 10m",
-            "available": False
+            "id": "interstellar",
+            "title": "Interstellar",
+            "filename": "interstellar.mp4"
+        },
+        {
+            "id": "F1",
+            "title": "F1",
+            "filename": "F1.mp4"
+        },
+        {
+            "id": "dark_knight",
+            "title": "The Dark Knight",
+            "filename": "dark_knight.mp4"
+        },
+        {
+            "id": "avatar",
+            "title": "Avatar",
+            "filename": "avatar.mp4"
         }
     ]
