@@ -1,68 +1,91 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
-export default function Home() {
-  const [movies, setMovies] = useState([]);
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+function App() {
+
+  const [movies,setMovies] = useState([]);
+  const [selectedMovie,setSelectedMovie] = useState(null);
+  const [search,setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/movies")
-      .then(res => res.json())
-      .then(data => {
-        setMovies(data);
-        setLoading(false);
-      });
-  }, []);
+
+    fetch("/api/movies/")
+      .then(res=>res.json())
+      .then(data=>setMovies(data));
+
+  },[]);
+
 
   const filteredMovies = movies.filter(movie =>
     movie.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="page">
-      <h1 className="title">🎬 TimePass Streaming</h1>
 
-      <input
-        type="text"
-        placeholder="Search movies..."
-        className="search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+    <div className="container">
 
-      {loading && <p className="message">Loading movies...</p>}
+      <header className="header">
+        <h1>🎬 TimePass Streaming</h1>
 
-      {!loading && filteredMovies.length === 0 && (
-        <p className="message">No movies found.</p>
-      )}
+        <input
+          placeholder="Search movies..."
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+        />
+
+      </header>
 
       <div className="grid">
+
         {filteredMovies.map(movie => (
+
           <div
-            key={movie.id}
             className="card"
-            onClick={() => setSelectedMovie(movie)}
+            key={movie.id}
+            onClick={()=>setSelectedMovie(movie)}
           >
-            <div className="thumbnail">▶</div>
-            <h3>{movie.title}</h3>
+
+            <img
+              src={`/posters/${movie.filename}.jpg`}
+              alt={movie.title}
+            />
+
+            <p>{movie.title}</p>
+
           </div>
+
         ))}
+
       </div>
 
+
       {selectedMovie && (
+
         <div className="modal">
-          <div className="modal-content">
-            <button onClick={() => setSelectedMovie(null)}>Close</button>
+
+          <div className="player">
+
+            <h2>{selectedMovie.title}</h2>
+
             <video
+              src={selectedMovie.stream_url}
               controls
               autoPlay
-              width="100%"
-              src={`/videos/${selectedMovie.filename}`}
             />
+
+            <button onClick={()=>setSelectedMovie(null)}>
+              Close
+            </button>
+
           </div>
+
         </div>
+
       )}
+
     </div>
   );
+
 }
+
+export default App;
