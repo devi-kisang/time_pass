@@ -1,91 +1,118 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 
 function App() {
 
-  const [movies,setMovies] = useState([]);
-  const [selectedMovie,setSelectedMovie] = useState(null);
-  const [search,setSearch] = useState("");
+  const [movies,setMovies] = useState([])
+  const [selectedMovie,setSelectedMovie] = useState(null)
 
-  useEffect(() => {
+  useEffect(()=>{
 
     fetch("/api/movies/")
       .then(res=>res.json())
-      .then(data=>setMovies(data));
+      .then(data=>setMovies(data))
 
-  },[]);
+  },[])
 
 
-  const filteredMovies = movies.filter(movie =>
-    movie.title.toLowerCase().includes(search.toLowerCase())
-  );
+  if(selectedMovie){
+
+    return(
+
+      <div style={{background:"#111",height:"100vh",color:"white"}}>
+
+        <button
+          onClick={()=>setSelectedMovie(null)}
+          style={{
+            margin:"20px",
+            padding:"10px",
+            fontSize:"16px"
+          }}
+        >
+          ← Back
+        </button>
+
+        <div style={{textAlign:"center"}}>
+
+          <h1>{selectedMovie.title}</h1>
+
+          <video
+            controls
+            autoPlay
+            width="900"
+            style={{borderRadius:"10px"}}
+          >
+            <source
+              src={selectedMovie.stream_url}
+              type="video/mp4"
+            />
+          </video>
+
+        </div>
+
+      </div>
+
+    )
+
+  }
+
 
   return (
 
-    <div className="container">
+    <div style={{
+      background:"#111",
+      minHeight:"100vh",
+      color:"white"
+    }}>
 
-      <header className="header">
-        <h1>🎬 TimePass Streaming</h1>
+      <h1 style={{
+        padding:"20px"
+      }}>
+        🎬 TimePass Streaming
+      </h1>
 
-        <input
-          placeholder="Search movies..."
-          value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-        />
 
-      </header>
+      <div style={{
+        display:"flex",
+        gap:"20px",
+        padding:"20px",
+        flexWrap:"wrap"
+      }}>
 
-      <div className="grid">
 
-        {filteredMovies.map(movie => (
+        {movies.map(movie=>(
 
           <div
-            className="card"
             key={movie.id}
+
+            style={{
+              cursor:"pointer",
+              width:"200px"
+            }}
+
             onClick={()=>setSelectedMovie(movie)}
           >
 
             <img
-              src={`/posters/${movie.filename}.jpg`}
-              alt={movie.title}
+              src={movie.poster_url}
+              width="200"
+              style={{
+                borderRadius:"10px"
+              }}
             />
 
-            <p>{movie.title}</p>
+            <h3>{movie.title}</h3>
 
           </div>
 
         ))}
 
+
       </div>
 
-
-      {selectedMovie && (
-
-        <div className="modal">
-
-          <div className="player">
-
-            <h2>{selectedMovie.title}</h2>
-
-            <video
-              src={selectedMovie.stream_url}
-              controls
-              autoPlay
-            />
-
-            <button onClick={()=>setSelectedMovie(null)}>
-              Close
-            </button>
-
-          </div>
-
-        </div>
-
-      )}
-
     </div>
-  );
+
+  )
 
 }
 
-export default App;
+export default App

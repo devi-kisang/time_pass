@@ -9,12 +9,16 @@ def get_movies():
         return []
 
     for filename in os.listdir(VIDEO_DIR):
+
         if filename.endswith(".mp4"):
+
             movie_id = filename.replace(".mp4", "")
+
             movies.append({
                 "id": movie_id,
-                "title": movie_id.replace("_", " ").title(),
-                "filename": filename
+                "title": movie_id.title(),
+                "filename": filename,
+                "poster_url": f"/posters/{movie_id.upper()}.png"
             })
 
     return movies
