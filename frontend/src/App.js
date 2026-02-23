@@ -5,6 +5,10 @@ function App() {
   const [movies,setMovies] = useState([])
   const [selectedMovie,setSelectedMovie] = useState(null)
 
+  const [showAbout,setShowAbout] = useState(false)
+  const [info,setInfo] = useState(null)
+
+
   useEffect(()=>{
 
     fetch("/api/movies/")
@@ -13,6 +17,60 @@ function App() {
 
   },[])
 
+
+  useEffect(()=>{
+
+    fetch("/api/info/")
+      .then(res=>res.json())
+      .then(data=>setInfo(data))
+
+  },[])
+
+
+
+/* ================= ABOUT PAGE ================= */
+
+  if(showAbout && info){
+
+    return(
+
+      <div style={{
+        background:"#111",
+        minHeight:"100vh",
+        color:"white",
+        padding:"40px"
+      }}>
+
+        <button
+          onClick={()=>setShowAbout(false)}
+          style={{
+            padding:"10px",
+            fontSize:"16px"
+          }}
+        >
+          ← Back
+        </button>
+
+        <h1>About Project</h1>
+
+        <h2>{info.project}</h2>
+
+        <p>{info.description}</p>
+
+        <p>Status: {info.status}</p>
+
+        <p>Author: {info.author}</p>
+
+        <p>Contact: {info.contact}</p>
+
+      </div>
+
+    )
+
+  }
+
+
+/* ================= VIDEO PLAYER ================= */
 
   if(selectedMovie){
 
@@ -56,6 +114,8 @@ function App() {
   }
 
 
+/* ================= HOME PAGE ================= */
+
   return (
 
     <div style={{
@@ -64,11 +124,27 @@ function App() {
       color:"white"
     }}>
 
-      <h1 style={{
+      <div style={{
+        display:"flex",
+        justifyContent:"space-between",
         padding:"20px"
       }}>
-        🎬 TimePass Streaming
-      </h1>
+
+        <h1>
+          🎬 TimePass Streaming
+        </h1>
+
+        <button
+          onClick={()=>setShowAbout(true)}
+          style={{
+            padding:"10px",
+            fontSize:"16px"
+          }}
+        >
+          About
+        </button>
+
+      </div>
 
 
       <div style={{
