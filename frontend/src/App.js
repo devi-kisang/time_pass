@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 function App() {
+  const [showPopup,setShowPopup] = useState(true)
 
   const [movies,setMovies] = useState([])
   const [selectedMovie,setSelectedMovie] = useState(null)
