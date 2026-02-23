@@ -26,8 +26,106 @@ function App() {
 
   },[])
 
+/* ================= PIRACY DISCLAIMER ================= */
+
+if(showPopup){
+
+  return(
+
+    <div style={{
+
+      position:"fixed",
+      top:0,
+      left:0,
+      width:"100%",
+      height:"100%",
+      background:"rgba(0,0,0,0.9)",
+
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
+
+      color:"white"
+
+    }}>
 
 
+      <div style={{
+
+        background:"#222",
+        padding:"40px",
+        borderRadius:"10px",
+        width:"600px",
+        textAlign:"center"
+
+      }}>
+
+
+        <h2>⚠️ Legal Disclaimer</h2>
+
+
+        <p style={{marginTop:"20px"}}>
+
+          This platform is a personal educational project
+          created to demonstrate Full Stack and DevOps skills.
+
+        </p>
+
+
+        <p>
+
+          This website does NOT support or promote
+          movie piracy or illegal content distribution.
+
+        </p>
+
+
+        <p>
+
+          Only a small number of sample videos are hosted
+          strictly for demonstration purposes.
+
+        </p>
+
+
+        <p>
+
+          All rights belong to their respective owners.
+
+        </p>
+
+
+        <button
+
+          onClick={()=>setShowPopup(false)}
+
+          style={{
+
+            marginTop:"20px",
+            padding:"12px 25px",
+            fontSize:"16px",
+            cursor:"pointer"
+
+          }}
+
+        >
+
+          Continue to Website
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+  )
+
+}
+
+
+  
 /* ================= ABOUT PAGE ================= */
 
   if(showAbout && info){
