@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  backend:
+    image: ghcr.io/devi-kisang/time_pass-backend:latest
+    container_name: time-pass-backend
+    restart: always
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: ghcr.io/devi-kisang/time_pass-frontend:latest
+    container_name: time-pass-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  prometheus:
+    image: prom/prometheus
+    container_name: time-pass-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: time-pass-grafana
+    restart: always
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
