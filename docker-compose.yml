@@ -32,8 +32,8 @@ services:
     depends_on:
       - prometheus
     environment:
-      - GF_SERVER_DOMAIN=kisang.tech
-      - GF_SERVER_ROOT_URL=https://kisang.tech/grafana/
+      - GF_SERVER_DOMAIN=timepass.kisang.tech
+      - GF_SERVER_ROOT_URL=https://timepass.kisang.tech/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
     volumes:
       - grafana-data:/var/lib/grafana
